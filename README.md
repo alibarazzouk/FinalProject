@@ -265,7 +265,7 @@ signals:
 
   else
 
-  box->setOriginalColor(Qt::blue);
+  box->setOriginalColor(Qt::darkgray);
 
   game->addToScene(box);
    }
@@ -587,6 +587,17 @@ Button * playButton = new Button("Play ");
     addToScene(playButton);
     listG.append(playButton);
 ```
+-creating the GameInfo button
+```cpp
+Button * InfoButton = new Button("Game Info ");
+    int gxPos = width()/2 - playButton->boundingRect().width()/2;
+    int gyPos = 450;
+    InfoButton->setPos(gxPos,gyPos);
+    connect(InfoButton, SIGNAL(clicked()),this,SLOT(GameInfo()));
+    addToScene(InfoButton);
+    listG.append(InfoButton);
+```
+
  - creating the quit button
 ```cpp
 Button * quitButton = new Button("Quit");
@@ -612,12 +623,17 @@ void drawDeadHolder(int x, int y, QColor color);
     void displayDeadBlack();
     void placeInDeadPlace(ChessPiece *piece);
 ```
+ - public slots
+```cpp
+void start();
+void GameInfo();
+```
  - scene related
 ```cpp
 void addToScene(QGraphicsItem *item);
     void removeFromScene(QGraphicsItem *item);
 ```
- -getters and setters
+ - getters and setters
 ```cpp
 ChessPiece *pieceToMove;
 
@@ -705,70 +721,73 @@ if(side == "WHITE")
  - the moves of the king
 ```cpp
 
-    location.clear();
+   location.clear();
     int row = this->getCurrentBox()->rowLoc;
     int col = this->getCurrentBox()->colLoc;
     QString team = this->getSide();
 
         if(col > 0 && row > 0 && !(game->collection[row-1][col-1]->getChessPieceColor() == team)) {//up left
             location.append(game->collection[row-1][col-1]);
-            game->collection[row-1][col-1]->setColor(Qt::yellow);
+            game->collection[row-1][col-1]->setColor(Qt::red);
             if(location.last()->getHasChessPiece()){
-                location.last()->setColor(Qt::yellow);
+                location.last()->setColor(Qt::red);
             }
         }
         if(col < 7 && row > 0 && !(game->collection[row-1][col+1]->getChessPieceColor() == team)) { // up right
             location.append(game->collection[row-1][col+1]);
-            game->collection[row-1][col+1]->setColor(Qt::yellow);
+            game->collection[row-1][col+1]->setColor(Qt::red);
             if(location.last()->getHasChessPiece()){
-                location.last()->setColor(Qt::yellow);
+                location.last()->setColor(Qt::red);
             }
         }
         if(row>0 && !(game->collection[row-1][col]->getChessPieceColor() == team)) {//up
             location.append(game->collection[row-1][col]);
-            game->collection[row-1][col]->setColor(Qt::yellow);
+            game->collection[row-1][col]->setColor(Qt::red);
             if(location.last()->getHasChessPiece()){
                 location.last()->setColor(Qt::red);
             }
         }
         if(row<7 && !(game->collection[row+1][col]->getChessPieceColor() == team)) {//down
             location.append(game->collection[row+1][col]);
-            game->collection[row+1][col]->setColor(Qt::yellow);
+            game->collection[row+1][col]->setColor(Qt::red);
             if(location.last()->getHasChessPiece()){
-                location.last()->setColor(Qt::yellow);
+                location.last()->setColor(Qt::red);
             }
         }
         if(col>0 && !(game->collection[row][col-1]->getChessPieceColor() == team)) {// left
             location.append(game->collection[row][col-1]);
-            game->collection[row][col-1]->setColor(Qt::yellow);
+            game->collection[row][col-1]->setColor(Qt::red);
             if(location.last()->getHasChessPiece()){
-                location.last()->setColor(Qt::yellow);
+                location.last()->setColor(Qt::red);
             }
         }
         if(col<7 && !(game->collection[row][col+1]->getChessPieceColor() == team)) {//right
             location.append(game->collection[row][col+1]);
-            game->collection[row][col+1]->setColor(Qt::yellow);
+            game->collection[row][col+1]->setColor(Qt::red);
             if(location.last()->getHasChessPiece()){
-                location.last()->setColor(Qt::yellow);
+                location.last()->setColor(Qt::red);
             }
         }
         if(col > 0 && row < 7  && !(game->collection[row+1][col-1]->getChessPieceColor() == team)) {//down left
             location.append(game->collection[row+1][col-1]);
-            game->collection[row+1][col-1]->setColor(Qt::yellow);
+            game->collection[row+1][col-1]->setColor(Qt::red);
             if(location.last()->getHasChessPiece()){
-                location.last()->setColor(Qt::yellow);
+                location.last()->setColor(Qt::red);
             }
         }
         if(col < 7 && row < 7 && !(game->collection[row+1][col+1]->getChessPieceColor() == team)) {//down right
             location.append(game->collection[row+1][col+1]);
-            game->collection[row+1][col+1]->setColor(Qt::yellow);
+            game->collection[row+1][col+1]->setColor(Qt::red);
             if(location.last()->getHasChessPiece()){
-                location.last()->setColor(Qt::yellow);
+                location.last()->setColor(Qt::red);
             }
         }
 
 
             findUnSafeLocation();
+
+
+
 ```
  - Find unsafe location
 ```cpp
@@ -952,9 +971,9 @@ if(side == "WHITE")
     if(i >=0 && j>=0 && (game->collection[i][j]->getChessPieceColor() != team) ) {
         location.append(game->collection[i][j]);
         if(location.last()->getHasChessPiece())
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
         else
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
     }
 
 ```
@@ -965,9 +984,9 @@ i = row - 2;
     if(i >=0 && j<=7 && (game->collection[i][j]->getChessPieceColor() != team) ) {
         location.append(game->collection[i][j]);
         if(location.last()->getHasChessPiece())
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
         else
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
     }
 ```
  - for the 3rd down down
@@ -977,9 +996,9 @@ i = row + 2;
     if(i <= 7 && j>=0 && (game->collection[i][j]->getChessPieceColor() != team) ) {
         location.append(game->collection[i][j]);
         if(location.last()->getHasChessPiece())
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
         else
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
     }
 ```
  - for the 4th down down right
@@ -989,9 +1008,9 @@ i = row + 2;
     if(i <=7 && j<=7 && (game->collection[i][j]->getChessPieceColor() != team) ) {
         location.append(game->collection[i][j]);
         if(location.last()->getHasChessPiece())
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
         else
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
     }
 ```
  - for the 5th left left up
@@ -1001,9 +1020,9 @@ i = row - 1;
     if(i >=0 && j>=0 && (game->collection[i][j]->getChessPieceColor() != team) ) {
         location.append(game->collection[i][j]);
         if(location.last()->getHasChessPiece())
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
         else
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
     }
 ```
  - for the 6th left left down
@@ -1013,9 +1032,9 @@ i = row + 1;
     if(i <=7 && j>=0 && (game->collection[i][j]->getChessPieceColor() != team) ) {
         location.append(game->collection[i][j]);
         if(location.last()->getHasChessPiece())
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
         else
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
     }
 ```
  - for the 7th right right up
@@ -1025,9 +1044,9 @@ i = row - 1;
     if(i >=0 && j<=7 && (game->collection[i][j]->getChessPieceColor() != team) ) {
         location.append(game->collection[i][j]);
         if(location.last()->getHasChessPiece())
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
         else
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
     }
 ```
  -and for the last right right down
@@ -1037,9 +1056,9 @@ i = row + 1;
     if(i <=7 && j<=7 && (game->collection[i][j]->getChessPieceColor() != team) ) {
         location.append(game->collection[i][j]);
         if(location.last()->getHasChessPiece())
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
         else
-            location.last()->setColor(Qt::yellow);
+            location.last()->setColor(Qt::red);
     }
 ```
 ## Rook
