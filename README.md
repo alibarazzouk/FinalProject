@@ -48,17 +48,13 @@ if(currentPiece  ==  game->pieceToMove  &&  currentPiece){
   ```cpp
  if(game->pieceToMove){
 
-  //if  same  team
-
+ 
   if(this->getChessPieceColor()  ==  game->pieceToMove->getSide())
 
   return;
 
-  //removing  the  eaten  piece
 
   QList  <ChessBox  *>  movLoc  =  game->pieceToMove->moveLocation();
-
-  //To  make  sure  the  selected  box  is  in  move  zone
 
   int  check  =  0;
 
@@ -80,15 +76,12 @@ if(currentPiece  ==  game->pieceToMove  &&  currentPiece){
 
   return;
 
-  //change  the  color  back  to  normal
 
   game->pieceToMove->decolor();
 
-  //make  the  first  move  false  applicable  for  pawn  only
 
   game->pieceToMove->firstMove  =  false;
 
-  //this  is  to  eat  or  consume  the  enemy  present  inn  the  movable  region
 
   if(this->getHasChessPiece()){
 
@@ -102,7 +95,6 @@ if(currentPiece  ==  game->pieceToMove  &&  currentPiece){
 
   }
 
-  //changing  the  new  stat  and  resetting  the  previous  left  region
 
   game->pieceToMove->getCurrentBox()->setHasChessPiece(false);
 
@@ -116,7 +108,6 @@ if(currentPiece  ==  game->pieceToMove  &&  currentPiece){
 
   game->pieceToMove  =  NULL;
 
-  //changing  turn
 
   game->changeTurn();
 
@@ -825,7 +816,6 @@ location.clear();
     int row = this->getCurrentBox()->rowLoc;
     int col = this->getCurrentBox()->colLoc;
     QString team = this->getSide();
-    //For up
 
      for(int i = row-1,j = col; i >= 0 ; i--) {
        if(game->collection[i][j]->getChessPieceColor() == team ) {
@@ -839,7 +829,6 @@ location.clear();
         }
     }
 
-     //For Down
 
       for(int i = row+1,j = col; i <= 7 ; i++) {
         if(game->collection[i][j]->getChessPieceColor() == team ) {
@@ -854,7 +843,6 @@ location.clear();
         }
      }
 
-      //For left
 
        for(int i = row,j = col-1; j >= 0 ; j--) {
          if(game->collection[i][j]->getChessPieceColor() == team ) {
@@ -867,7 +855,6 @@ location.clear();
                 break;
          }
         }
-       //For Right
 
         for(int i = row,j = col+1; j <= 7 ; j++)
         {
@@ -883,7 +870,6 @@ location.clear();
 
        }
 
-        //For upper Left
 
          for(int i = row-1,j = col-1; i >= 0 && j >=0; i--,j--) {
            if(game->collection[i][j]->getChessPieceColor() == team ) {
@@ -899,7 +885,6 @@ location.clear();
            }
         }
 
-         //For upper right
 
           for(int i = row-1,j = col+1; i >= 0 && j <= 7; i--,j++) {
             if(game->collection[i][j]->getChessPieceColor() == team ) {
@@ -915,7 +900,6 @@ location.clear();
             }
          }
 
-          //For downward right
 
            for(int i = row+1,j = col+1; i <= 7 && j <= 7; i++,j++) {
              if(game->collection[i][j]->getChessPieceColor() == team ) {
@@ -931,7 +915,6 @@ location.clear();
              }
           }
 
-           //For downward left
 
             for(int i = row+1,j = col-1; i <= 7 && j >= 0; i++,j--) {
               if(game->collection[i][j]->getChessPieceColor() == team ) {
